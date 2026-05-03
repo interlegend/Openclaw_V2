@@ -1,0 +1,6 @@
+{
+  "specs": [
+    "@mariozechner/pi-ai@0.69.0",
+    "ws@^8.20.0"
+  ]
+}

@@ -1,0 +1,1 @@
+/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/image-generation-provider-hvLe0RPg.js

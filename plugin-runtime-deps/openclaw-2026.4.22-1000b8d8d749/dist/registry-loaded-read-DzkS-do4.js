@@ -1,0 +1,1 @@
+/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/registry-loaded-read-DzkS-do4.js

@@ -1,0 +1,1 @@
+/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/searxng-search-provider-CvlboGu7.js

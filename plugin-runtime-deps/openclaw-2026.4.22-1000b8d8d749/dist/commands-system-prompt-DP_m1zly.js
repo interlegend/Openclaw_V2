@@ -1,0 +1,1 @@
+/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/commands-system-prompt-DP_m1zly.js

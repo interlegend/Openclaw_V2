@@ -1,0 +1,1 @@
+/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/plugin-web-search-config-Xvj9hI3Y.js

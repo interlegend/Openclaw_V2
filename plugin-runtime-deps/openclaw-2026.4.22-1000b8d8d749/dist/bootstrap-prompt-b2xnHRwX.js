@@ -1,0 +1,1 @@
+/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/bootstrap-prompt-b2xnHRwX.js

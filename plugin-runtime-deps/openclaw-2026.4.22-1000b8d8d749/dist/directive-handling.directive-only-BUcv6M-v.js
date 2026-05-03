@@ -1,0 +1,1 @@
+/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/directive-handling.directive-only-BUcv6M-v.js

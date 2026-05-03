@@ -1,0 +1,1 @@
+/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/realtime-transcription-provider-Dfi9pHgP.js

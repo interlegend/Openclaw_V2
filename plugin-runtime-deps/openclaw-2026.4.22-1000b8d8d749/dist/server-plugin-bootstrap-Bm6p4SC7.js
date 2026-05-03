@@ -1,0 +1,1 @@
+/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/server-plugin-bootstrap-Bm6p4SC7.js

@@ -1,0 +1,1 @@
+/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/plugin-auto-enable-DdH3n9V8.js

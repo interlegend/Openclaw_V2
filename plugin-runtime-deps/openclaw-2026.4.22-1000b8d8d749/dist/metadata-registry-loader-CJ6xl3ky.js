@@ -1,0 +1,1 @@
+/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/metadata-registry-loader-CJ6xl3ky.js

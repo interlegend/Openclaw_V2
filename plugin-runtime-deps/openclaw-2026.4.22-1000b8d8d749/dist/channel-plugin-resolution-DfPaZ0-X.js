@@ -1,0 +1,1 @@
+/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/channel-plugin-resolution-DfPaZ0-X.js

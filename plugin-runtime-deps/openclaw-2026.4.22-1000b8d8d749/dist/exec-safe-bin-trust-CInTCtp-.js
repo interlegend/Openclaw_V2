@@ -1,0 +1,1 @@
+/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/exec-safe-bin-trust-CInTCtp-.js

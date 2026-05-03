@@ -1,0 +1,1 @@
+/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/skills-snapshot.runtime-CTnC7-St.js

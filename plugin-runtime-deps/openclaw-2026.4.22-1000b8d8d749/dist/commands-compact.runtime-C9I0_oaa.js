@@ -1,0 +1,1 @@
+/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/commands-compact.runtime-C9I0_oaa.js

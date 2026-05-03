@@ -1,0 +1,1 @@
+/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/doctor-workspace-status-DEe-R-zK.js

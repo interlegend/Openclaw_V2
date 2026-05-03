@@ -1,0 +1,149 @@
+{
+  "agents": {
+    "defaults": {
+      "bootstrapMaxChars": 32000,
+      "bootstrapTotalMaxChars": 32000,
+      "contextInjection": "continuation-skip",
+      "model": {
+        "primary": "groq/llama-3.3-70b-versatile",
+        "fallbacks": [
+          "ollama/gpt-oss:20b-cloud"
+        ]
+      },
+      "workspace": "/home/ubuntu/.openclaw/workspace",
+      "llm": {
+        "idleTimeoutSeconds": 0
+      },
+      "models": {
+        "groq/llama-3.3-70b-versatile": {},
+        "ollama/gpt-oss:20b-cloud": {}
+      }
+    },
+    "list": [
+      {
+        "id": "main",
+        "identity": {
+          "name": "OpenClaw 🐾",
+          "emoji": "🐾 (but I vary them based on mood)",
+          "theme": "Final Form AI stack — Oracle Cloud brain, built for real work, real chaos.",
+          "avatar": "avatars/openclaw.png"
+        }
+      }
+    ]
+  },
+  "auth": {
+    "profiles": {
+      "ollama:default": {
+        "mode": "api_key",
+        "provider": "ollama"
+      }
+    }
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "botToken": "8633199689:AAFLbD7I6CAH1PRkFQdeKNVhEVgDFD26-pg",
+      "allowFrom": [
+        "7714508470"
+      ],
+      "dmPolicy": "allowlist",
+      "groupPolicy": "disabled"
+    }
+  },
+  "gateway": {
+    "auth": {
+      "mode": "token",
+      "token": "cc134fa6f0a1f9071e81aa23ea5f6780ad28db0fac22b02b"
+    },
+    "bind": "loopback",
+    "mode": "local",
+    "port": 18789,
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    }
+  },
+  "meta": {
+    "lastTouchedAt": "2026-04-26T18:32:31.377Z",
+    "lastTouchedVersion": "2026.4.23"
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "ollama": {
+        "api": "ollama",
+        "apiKey": "ollama-local",
+        "baseUrl": "http://127.0.0.1:11434",
+        "models": [
+          {
+            "id": "gpt-oss:20b-cloud",
+            "name": "GPT-OSS 20B Cloud",
+            "contextWindow": 131072,
+            "maxTokens": 32768,
+            "reasoning": true,
+            "input": [
+              "text"
+            ]
+          },
+          {
+            "id": "qwen3:1.7b",
+            "name": "qwen3:1.7b",
+            "contextWindow": 32768,
+            "reasoning": true,
+            "input": [
+              "text"
+            ]
+          }
+        ]
+      },
+      "groq": {
+        "api": "openai-completions",
+        "apiKey": "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",
+        "baseUrl": "https://api.groq.com/openai/v1",
+        "models": [
+          {
+            "id": "llama-3.3-70b-versatile",
+            "name": "Llama 3.3 70B Versatile",
+            "contextWindow": 131072,
+            "maxTokens": 32768,
+            "reasoning": true,
+            "input": [
+              "text"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "plugins": {
+    "entries": {
+      "ollama": {
+        "enabled": true
+      },
+      "groq": {
+        "enabled": true
+      }
+    }
+  },
+  "session": {
+    "dmScope": "per-channel-peer"
+  },
+  "skills": {
+    "install": {
+      "nodeManager": "npm"
+    }
+  },
+  "tools": {
+    "profile": "minimal",
+    "web": {}
+  },
+  "wizard": {
+    "lastRunAt": "2026-04-25T05:40:54.120Z",
+    "lastRunCommand": "onboard",
+    "lastRunMode": "local",
+    "lastRunVersion": "2026.4.22"
+  },
+  "env": {
+    "GROQ_API_KEY": "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"
+  }
+}

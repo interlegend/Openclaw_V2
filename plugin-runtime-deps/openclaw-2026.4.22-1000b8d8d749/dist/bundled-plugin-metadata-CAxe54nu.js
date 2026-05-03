@@ -1,0 +1,1 @@
+/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/bundled-plugin-metadata-CAxe54nu.js
