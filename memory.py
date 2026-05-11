@@ -4,22 +4,31 @@ import json
 import asyncio
 from datetime import datetime
 from dotenv import load_dotenv
+from pathlib import Path
 
 # Load env vars
 load_dotenv()
 
-# Absolute paths — never break regardless of working directory
-MEMORY_DIR  = os.path.expanduser("~/.openclaw/workspace")
-MEMORY_FILE = os.path.join(MEMORY_DIR, "MEMORY.md")
-DAILY_LOG_DIR = os.path.join(MEMORY_DIR, "memory")
+# Project Root Resolution
+PROJECT_ROOT = Path(__file__).parent.resolve()
+
+# Absolute paths — Local first for portability
+LOCAL_WORKSPACE = PROJECT_ROOT / "workspace"
+GLOBAL_WORKSPACE = Path.home() / ".openclaw" / "workspace"
+
+# Use local if it exists, otherwise use local anyway (to enforce portability)
+MEMORY_DIR = LOCAL_WORKSPACE
+MEMORY_DIR.mkdir(parents=True, exist_ok=True)
+MEMORY_FILE = MEMORY_DIR / "MEMORY.md"
+DAILY_LOG_DIR = MEMORY_DIR / "memory"
+DAILY_LOG_DIR.mkdir(parents=True, exist_ok=True)
 
 def get_daily_log_path() -> str:
     today = datetime.now().strftime("%Y-%m-%d")
-    return os.path.join(DAILY_LOG_DIR, f"{today}.md")
+    return str(DAILY_LOG_DIR / f"{today}.md")
 
 def ensure_memory_exists():
-    if not os.path.exists(MEMORY_FILE):
-        os.makedirs(MEMORY_DIR, exist_ok=True)
+    if not MEMORY_FILE.exists():
         with open(MEMORY_FILE, "w") as f:
             f.write("# MEMORY.md — Long-Term Persistent Memory\nLast updated: " + datetime.now().strftime("%Y-%m-%d") + "\n\n***\n")
         print(f"[MEMORY] Created fresh {MEMORY_FILE}")

@@ -136,7 +136,9 @@ async def run_command_streaming(
     """
     global _current_task_steps
     env = os.environ.copy()
-    env["PATH"] = f"{os.path.expanduser('~/.local/bin')}:{env.get('PATH', '')}"
+    project_root = str(Path(__file__).parent.resolve())
+    local_bin = str(Path(__file__).parent / "bin")
+    env["PATH"] = f"{project_root}{os.pathsep}{local_bin}{os.pathsep}{env.get('PATH', '')}"
     
     # Send start notification ONLY for streaming commands
     await notify_praveen(
@@ -546,11 +548,26 @@ async def ls_handler(update, context):
 
 async def kill_handler(update, context):
     if not await restricted(update, context, "KILL"): return
-    if not context.args: return
-    target = context.args[0]
-    command = f"kill -9 {target}" if target.isdigit() else f"pkill -f {target}"
-    result = execution.run_command(command)
-    await safe_send(update, f"💀 Killed: `{target}`\nOutput: {result['output']}")
+    if not context.args:
+        await update.message.reply_text("Usage: /kill <pid_or_name>")
+        return
+    
+    target = " ".join(context.args)
+    killed = []
+    
+    for proc in psutil.process_iter(['pid', 'name']):
+        try:
+            name = proc.info['name'] or ""
+            if str(proc.pid) == target or (not target.isdigit() and target.lower() in name.lower()):
+                proc.terminate()
+                killed.append(f"{name} ({proc.pid})")
+        except (psutil.NoSuchProcess, psutil.AccessDenied):
+            continue
+            
+    if killed:
+        await safe_send(update, f"✅ Terminated:\n- " + "\n- ".join(killed))
+    else:
+        await update.message.reply_text(f"❌ No process found matching '{target}'")
 
 async def reset_handler(update, context):
     if not await restricted(update, context): return

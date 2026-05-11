@@ -1,5 +1,5 @@
 # MEMORY.md â€” Long-Term Persistent Memory
-Last updated: 2026-04-28
+Last updated: 2026-05-09
 
 ***
 
@@ -76,3 +76,11 @@ Last updated: 2026-04-28
 - The user inquires about the bot's capability to read screenshots, indicating a potential need for image processing or text extraction from images.
 - The bot lacks native vision capabilities, being a text-based AI, and cannot directly read or process images.
 - The bot can suggest OCR tools for extracting text from images but cannot perform this task itself.
+
+## Session Notes — 2026-05-09
+- OpenClaw's personality files are located in multiple files, including IDENTITY.md, SOUL.md, MEMORY.md, and USER.md, which define its core vibe, tone, language, and overall personality.
+- The IDENTITY.md and SOUL.md files are not found in the expected location, C:\home\ubuntu\, indicating a potential issue with file paths or locations.
+- OpenClaw attempts to load its identity and soul files, but encounters "File not found" errors, suggesting a discrepancy between expected and actual file locations.
+- User's favorite color is Neon Void Blue
+- User is testing the new portable architecture
+- The user's favorite color has been updated to Lime Green.

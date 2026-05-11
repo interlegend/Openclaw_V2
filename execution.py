@@ -1,6 +1,7 @@
 import subprocess
 import os
 import re
+import sys
 
 BLACKLIST = [
     "rm -rf /", "rm -rf ~", "mkfs", "dd if=", ":(){ :|:& };:", "deltree", "format c:"
@@ -8,7 +9,8 @@ BLACKLIST = [
 
 SUDO_INDICATORS = [
     "sudo:", "password for", "authentication failure",
-    "[sudo]", "Permission denied", "Operation not permitted"
+    "[sudo]", "Permission denied", "Operation not permitted",
+    "access is denied"
 ]
 
 ERROR_INDICATORS = [
@@ -61,8 +63,11 @@ def run_shell(command, timeout=30):
     
     try:
         env = os.environ.copy()
-        local_bin = os.path.expanduser("~/.local/bin")
-        env["PATH"] = f"{local_bin}:{env.get('PATH', '')}"
+        project_root = str(Path(__file__).parent.resolve())
+        
+        # Add project root and a local bin folder to PATH for portability
+        local_bin = str(Path(__file__).parent / "bin")
+        env["PATH"] = f"{project_root}{os.pathsep}{local_bin}{os.pathsep}{env.get('PATH', '')}"
 
         result = subprocess.run(
             command,
@@ -82,22 +87,25 @@ def run_shell(command, timeout=30):
         return None, str(e)
 
 def run_python(code, timeout=30):
-    # Escape quotes for shell execution
-    escaped_code = code.replace("'", "'\\''")
-    command = f"python3 -c '{escaped_code}'"
-    
-    if is_blacklisted(command):
+    if is_blacklisted(code):
         return None, "bruh absolutely not 💀 I have self-preservation instincts unlike you"
     
     try:
+        # Cross-platform safe python execution
         result = subprocess.run(
-            command,
-            shell=True,
+            [sys.executable, "-c", code],
             capture_output=True,
             text=True,
             timeout=timeout
         )
         output = result.stdout + result.stderr
+        if len(output) > 4000:
+            output = output[:4000] + "\n... [truncated]"
+        return output, None
+    except subprocess.TimeoutExpired:
+        return None, "Command timed out after 30 seconds."
+    except Exception as e:
+        return None, str(e)
         if len(output) > 4000:
             output = output[:4000] + "\n... [truncated]"
         return output, None
@@ -122,8 +130,9 @@ def run_command(cmd: str, timeout: int = 120) -> dict:
         }
 
     env = os.environ.copy()
-    local_bin = os.path.expanduser("~/.local/bin")
-    env["PATH"] = f"{local_bin}:{env.get('PATH', '')}"
+    project_root = str(Path(__file__).parent.resolve())
+    local_bin = str(Path(__file__).parent / "bin")
+    env["PATH"] = f"{project_root}{os.pathsep}{local_bin}{os.pathsep}{env.get('PATH', '')}"
     
     try:
         result = subprocess.run(

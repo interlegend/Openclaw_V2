@@ -1,10 +1,14 @@
+from pathlib import Path
 import psutil
 import time
 
 def get_system_stats():
     cpu_usage = psutil.cpu_percent(interval=1)
     ram = psutil.virtual_memory()
-    disk = psutil.disk_usage('/')
+    
+    # Cross-platform drive detection
+    drive = Path.home().anchor or "C:\\"
+    disk = psutil.disk_usage(drive)
     
     # Top 5 processes by CPU usage
     processes = []

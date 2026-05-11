@@ -10,7 +10,7 @@
           "ollama/gpt-oss:20b-cloud"
         ]
       },
-      "workspace": "/home/ubuntu/.openclaw/workspace",
+      "workspace": "RELATIVE:workspace",
       "llm": {
         "idleTimeoutSeconds": 0
       },
@@ -42,7 +42,7 @@
   "channels": {
     "telegram": {
       "enabled": true,
-      "botToken": "8633199689:AAFLbD7I6CAH1PRkFQdeKNVhEVgDFD26-pg",
+      "botToken": "ENV:TELEGRAM_BOT_TOKEN",
       "allowFrom": [
         "7714508470"
       ],
@@ -53,7 +53,7 @@
   "gateway": {
     "auth": {
       "mode": "token",
-      "token": "cc134fa6f0a1f9071e81aa23ea5f6780ad28db0fac22b02b"
+      "token": "ENV:GATEWAY_TOKEN"
     },
     "bind": "loopback",
     "mode": "local",
@@ -98,7 +98,7 @@
       },
       "groq": {
         "api": "openai-completions",
-        "apiKey": "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",
+        "apiKey": "ENV:GROQ_API_KEY",
         "baseUrl": "https://api.groq.com/openai/v1",
         "models": [
           {
@@ -144,6 +144,6 @@
     "lastRunVersion": "2026.4.22"
   },
   "env": {
-    "GROQ_API_KEY": "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"
+    "GROQ_API_KEY": "ENV:GROQ_API_KEY"
   }
 }
