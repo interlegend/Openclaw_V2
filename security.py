@@ -5,8 +5,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-ALLOWED_USERS = [int(u.strip()) for u in os.getenv("TELEGRAM_ALLOWED_USERS", "7714508470").split(",") if u.strip()]
-BOT_PASSWORD = os.getenv("BOT_PASSWORD", "password")
+# Strict Environment Loading
+ALLOWED_USERS_RAW = os.getenv("TELEGRAM_ALLOWED_USERS", "")
+ALLOWED_USERS = [int(u.strip()) for u in ALLOWED_USERS_RAW.split(",") if u.strip()]
+BOT_PASSWORD = os.getenv("BOT_PASSWORD", "")
+
+def get_admin_id():
+    """Return the first user in the allowed list as the primary admin."""
+    return ALLOWED_USERS[0] if ALLOWED_USERS else None
 COMMAND_LOG_PATH = os.path.expanduser("~/openclaw_commands.log")
 
 # State for locking

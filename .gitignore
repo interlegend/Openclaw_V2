@@ -1,9 +1,49 @@
+# --- SECURITY & SENSITIVE ---
 .env
-node_modules/
+.env.local
+*.key
+*.pem
+identity/
+devices/
+
+# --- RUNTIME DATA & STATE ---
+workspace/memory/
+agents/
+sandboxes/
+sessions/
+logs/
+tmp/
+temp/
+.openclaw/
+plugin-runtime-deps/
+flows/
+tasks/
+memory/*.sqlite*
+
+# --- PYTHON & BUILD ---
 __pycache__/
-*.log
-openclaw.json.bak*
-openclaw.json.clobbered.*
-openclaw.json.last-good
-openclaw.json.manual-bak
-openclaw.json.broken
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+build/
+dist/
+*.egg-info/
+
+# --- OS & IDE ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- BACKUPS & MISC ---
+*.bak
+*.clobbered.*
+*.last-good
+*.manual-bak
+*.broken
+*.session
+*.pid
+*.lock

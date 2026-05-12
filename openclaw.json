@@ -44,7 +44,7 @@
       "enabled": true,
       "botToken": "ENV:TELEGRAM_BOT_TOKEN",
       "allowFrom": [
-        "7714508470"
+        "ENV:TELEGRAM_ALLOWED_USERS"
       ],
       "dmPolicy": "allowlist",
       "groupPolicy": "disabled"

@@ -20,11 +20,10 @@ import files
 import ai
 import memory
 
-# Load environment variables
-load_dotenv()
+# Strict Environment Loading
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 ALLOWED_USERS = security.ALLOWED_USERS
-PRAVEEN_CHAT_ID = int(os.getenv("ALLOWED_USER_ID", "7714508470"))
+PRAVEEN_CHAT_ID = security.get_admin_id()
 START_TIME = datetime.now()
 
 # Global app reference for notifications
