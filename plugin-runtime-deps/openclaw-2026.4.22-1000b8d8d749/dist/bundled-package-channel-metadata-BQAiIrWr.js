@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/bundled-package-channel-metadata-BQAiIrWr.js

@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/git-commit-BY0ir8SO.js

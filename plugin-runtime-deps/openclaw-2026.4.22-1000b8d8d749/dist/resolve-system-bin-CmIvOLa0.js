@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/resolve-system-bin-CmIvOLa0.js

@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/system-prompt-BDZ2g8e3.js

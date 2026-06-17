@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/skill-commands.runtime-Cu0PIqsA.js

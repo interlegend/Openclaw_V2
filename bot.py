@@ -1,7 +1,7 @@
 import os
 import time
 import logging
-import subprocess
+from pathlib import Path
 import json
 import psutil
 import re

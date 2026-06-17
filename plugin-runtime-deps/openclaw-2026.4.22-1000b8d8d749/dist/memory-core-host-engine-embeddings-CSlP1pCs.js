@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/memory-core-host-engine-embeddings-CSlP1pCs.js

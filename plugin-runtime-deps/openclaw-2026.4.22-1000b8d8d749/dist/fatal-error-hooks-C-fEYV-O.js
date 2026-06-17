@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/fatal-error-hooks-C-fEYV-O.js

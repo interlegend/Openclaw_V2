@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/acp-stateful-target-driver-CM5LKzJ5.js

@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/approval-gateway-resolver-9p8oXZs5.js

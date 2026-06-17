@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/response-prefix-template-Bh4hT6SZ.js

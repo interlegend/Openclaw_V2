@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/matrix-thread-bindings-D8ugXoN3.js

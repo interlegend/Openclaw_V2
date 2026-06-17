@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/allow-from-store-file-Bqx_x4i2.js

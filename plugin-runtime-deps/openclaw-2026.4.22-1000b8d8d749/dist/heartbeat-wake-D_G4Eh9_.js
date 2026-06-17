@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/heartbeat-wake-D_G4Eh9_.js

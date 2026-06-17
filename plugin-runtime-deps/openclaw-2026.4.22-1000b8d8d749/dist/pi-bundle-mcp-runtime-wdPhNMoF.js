@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/pi-bundle-mcp-runtime-wdPhNMoF.js

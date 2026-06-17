@@ -1,6 +1,6 @@
 import subprocess
 import os
-import re
+from pathlib import Path
 import sys
 
 BLACKLIST = [
@@ -41,6 +41,20 @@ BACKGROUND_COMMANDS = [
     "make ", "cmake ", "docker build", "docker pull"
 ]
 
+# Configuration constants
+OUTPUT_TRUNCATE = 4000
+DEFAULT_SHELL_TIMEOUT = 30
+DEFAULT_CMD_TIMEOUT = 120
+
+
+def _build_exec_env() -> dict:
+    """Return an environment dict with project root and local bin prepended to PATH."""
+    env = os.environ.copy()
+    project_root = str(Path(__file__).parent.resolve())
+    local_bin = str(Path(__file__).parent / "bin")
+    env["PATH"] = f"{project_root}{os.pathsep}{local_bin}{os.pathsep}{env.get('PATH', '')}"
+    return env
+
 def is_blacklisted(command):
     cmd_lower = command.lower()
     for item in BLACKLIST:
@@ -57,124 +71,117 @@ def is_long_running(command: str) -> bool:
     cmd_lower = command.lower().strip()
     return any(cmd_lower.startswith(bg) for bg in BACKGROUND_COMMANDS)
 
-def run_shell(command, timeout=30):
+def run_shell(command, timeout: int = DEFAULT_SHELL_TIMEOUT):
+    """Legacy convenience: execute a shell command and return (output, error).
+
+    This function is kept for backwards compatibility but delegates to
+    `run_command` and maps the structured dict back to the older tuple contract.
+    """
     if is_blacklisted(command):
         return None, "bruh absolutely not 💀 I have self-preservation instincts unlike you"
-    
-    try:
-        env = os.environ.copy()
-        project_root = str(Path(__file__).parent.resolve())
-        
-        # Add project root and a local bin folder to PATH for portability
-        local_bin = str(Path(__file__).parent / "bin")
-        env["PATH"] = f"{project_root}{os.pathsep}{local_bin}{os.pathsep}{env.get('PATH', '')}"
 
-        result = subprocess.run(
-            command,
-            shell=True,
-            capture_output=True,
-            text=True,
-            timeout=timeout,
-            env=env
-        )
-        output = result.stdout + result.stderr
-        if len(output) > 4000:
-            output = output[:4000] + "\n... [truncated]"
-        return output, None
-    except subprocess.TimeoutExpired:
-        return None, "Command timed out after 30 seconds."
-    except Exception as e:
-        return None, str(e)
+    result = run_command(command, timeout=timeout)
+    if result.get("error_type") is not None and not result.get("success", False):
+        return None, result.get("output")
+    return result.get("output"), None
 
-def run_python(code, timeout=30):
+def run_python(code: str, timeout: int = DEFAULT_SHELL_TIMEOUT):
+    """Legacy convenience: execute Python code and return (output, error).
+
+    Delegates to `run_command` using the current Python interpreter. Returns
+    a tuple for backwards compatibility.
+    """
     if is_blacklisted(code):
         return None, "bruh absolutely not 💀 I have self-preservation instincts unlike you"
-    
-    try:
-        # Cross-platform safe python execution
-        result = subprocess.run(
-            [sys.executable, "-c", code],
-            capture_output=True,
-            text=True,
-            timeout=timeout
-        )
-        output = result.stdout + result.stderr
-        if len(output) > 4000:
-            output = output[:4000] + "\n... [truncated]"
-        return output, None
-    except subprocess.TimeoutExpired:
-        return None, "Command timed out after 30 seconds."
-    except Exception as e:
-        return None, str(e)
-        if len(output) > 4000:
-            output = output[:4000] + "\n... [truncated]"
-        return output, None
-    except subprocess.TimeoutExpired:
-        return None, "Python execution timeout."
-    except Exception as e:
-        return None, str(e)
+
+    cmd = [sys.executable, "-c", code]
+    result = run_command(cmd, timeout=timeout)
+    if result.get("error_type") is not None and not result.get("success", False):
+        return None, result.get("output")
+    return result.get("output"), None
 
 # === NEW STRUCTURED RUNNER ===
-def run_command(cmd: str, timeout: int = 120) -> dict:
+def run_command(cmd, timeout: int = DEFAULT_CMD_TIMEOUT) -> dict:
+    """Unified execution engine.
+
+    - `cmd` may be a string (shell=True) or a list/tuple (args, shell=False).
+    - Returns a structured dict with consistent keys used across the system.
+
+    Compatibility: We preserve the original `success` semantics used by callers
+    while also exposing `exit_code_success` and `heuristic_success` so future
+    callers can prefer deterministic exit-code-based results.
     """
-    Execute command and return structured result with success detection.
-    Returns dict with: output, success, needs_sudo, error_type
-    """
-    if is_blacklisted(cmd):
+    # Blacklist check
+    cmd_display = cmd if isinstance(cmd, str) else " ".join(cmd)
+    if is_blacklisted(cmd_display):
         return {
             "output": "bruh absolutely not 💀 I have self-preservation instincts unlike you",
             "success": False,
+            "exit_code_success": False,
+            "heuristic_success": False,
             "needs_sudo": False,
             "returncode": -1,
             "error_type": "blacklist"
         }
 
-    env = os.environ.copy()
-    project_root = str(Path(__file__).parent.resolve())
-    local_bin = str(Path(__file__).parent / "bin")
-    env["PATH"] = f"{project_root}{os.pathsep}{local_bin}{os.pathsep}{env.get('PATH', '')}"
-    
+    env = _build_exec_env()
+
+    use_shell = isinstance(cmd, str)
     try:
         result = subprocess.run(
-            cmd, shell=True, capture_output=True,
-            text=True, timeout=timeout, env=env
+            cmd,
+            shell=use_shell,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+            env=env
         )
-        
-        # Detect silent success first
-        if is_silent_success_command(cmd) and result.returncode == 0:
-            return {
-                "output": "(silent success — no output expected)",
-                "success": True,
-                "needs_sudo": False,
-                "returncode": 0,
-                "error_type": None
-            }
 
-        combined_output = result.stdout.strip()
-        if result.stderr.strip():
-            combined_output += f"\n[stderr]: {result.stderr.strip()}"
-        
-        output = combined_output if combined_output else "(command returned no output)"
-        
-        # Detect success/failure
+        # Normalize outputs
+        stdout = (result.stdout or "").strip()
+        stderr = (result.stderr or "").strip()
+        combined = stdout
+        if stderr:
+            combined += ("\n[stderr]: " + stderr) if combined else ("[stderr]: " + stderr)
+        output = combined if combined else "(command returned no output)"
+        if len(output) > OUTPUT_TRUNCATE:
+            output = output[:OUTPUT_TRUNCATE] + "\n... [truncated]"
+
         output_lower = output.lower()
+
+        # Heuristics
         needs_sudo = any(ind.lower() in output_lower for ind in SUDO_INDICATORS)
-        has_error = result.returncode != 0 or any(ind.lower() in output_lower for ind in ERROR_INDICATORS)
-        has_success = any(ind.lower() in output_lower for ind in SUCCESS_INDICATORS)
-        is_actually_success = (result.returncode == 0 and not any(ind.lower() in output_lower for ind in ERROR_INDICATORS)) or has_success
-        
+        has_error_text = any(ind.lower() in output_lower for ind in ERROR_INDICATORS)
+        has_success_text = any(ind.lower() in output_lower for ind in SUCCESS_INDICATORS)
+
+        # Deterministic exit-code result (authoritative)
+        exit_code_success = (result.returncode == 0)
+
+        # Compatibility: previous implementation allowed textual success to override
+        # non-zero exit codes. Preserve that in `success` for now, but expose
+        # `exit_code_success` and `heuristic_success` for callers to adopt.
+        heuristic_success = (not exit_code_success) and has_success_text
+        # Previous `is_actually_success` considered absence of known error text too
+        is_actually_success = exit_code_success and not has_error_text
+        if not is_actually_success and has_success_text:
+            is_actually_success = True
+
         return {
             "output": output,
             "success": is_actually_success,
+            "exit_code_success": exit_code_success,
+            "heuristic_success": heuristic_success,
             "needs_sudo": needs_sudo,
             "returncode": result.returncode,
             "error_type": "sudo" if needs_sudo else ("error" if not is_actually_success else None)
         }
-        
+
     except subprocess.TimeoutExpired:
         return {
             "output": f"Command timed out after {timeout}s",
             "success": False,
+            "exit_code_success": False,
+            "heuristic_success": False,
             "needs_sudo": False,
             "returncode": -1,
             "error_type": "timeout"
@@ -183,6 +190,8 @@ def run_command(cmd: str, timeout: int = 120) -> dict:
         return {
             "output": str(e),
             "success": False,
+            "exit_code_success": False,
+            "heuristic_success": False,
             "needs_sudo": False,
             "returncode": -1,
             "error_type": "exception"

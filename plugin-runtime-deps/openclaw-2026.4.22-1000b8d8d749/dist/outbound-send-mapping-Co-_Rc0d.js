@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/outbound-send-mapping-Co-_Rc0d.js

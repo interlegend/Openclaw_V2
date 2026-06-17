@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/secret-file-runtime-ZnJ4Jf6f.js

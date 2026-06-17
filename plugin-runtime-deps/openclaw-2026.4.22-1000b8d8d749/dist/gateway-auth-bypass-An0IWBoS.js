@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/gateway-auth-bypass-An0IWBoS.js

@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/matrix-runtime-surface-B3svVXz4.js

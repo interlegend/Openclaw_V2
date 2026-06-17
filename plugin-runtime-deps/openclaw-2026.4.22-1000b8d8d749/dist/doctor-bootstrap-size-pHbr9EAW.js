@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/doctor-bootstrap-size-pHbr9EAW.js

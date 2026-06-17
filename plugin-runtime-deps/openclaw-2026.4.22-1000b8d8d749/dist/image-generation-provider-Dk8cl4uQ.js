@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/image-generation-provider-Dk8cl4uQ.js

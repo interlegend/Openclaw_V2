@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/approval-native-target-key-BT7Q9YMt.js

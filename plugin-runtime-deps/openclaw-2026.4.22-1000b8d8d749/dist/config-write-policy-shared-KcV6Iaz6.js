@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/config-write-policy-shared-KcV6Iaz6.js

@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/openai-codex-catalog-CfEPU9Mn.js

@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/test.D1JkM1w4-icdSoNg8.js

@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/bash-tools.exec-runtime-DzYhVg8w.js

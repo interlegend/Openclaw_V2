@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/diagnostic-support-bundle-C4QKA_w5.js

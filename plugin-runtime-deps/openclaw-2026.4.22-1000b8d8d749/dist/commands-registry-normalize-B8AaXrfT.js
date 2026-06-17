@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/commands-registry-normalize-B8AaXrfT.js

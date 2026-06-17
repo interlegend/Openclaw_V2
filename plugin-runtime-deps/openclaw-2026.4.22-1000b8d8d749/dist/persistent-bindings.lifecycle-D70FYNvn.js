@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/persistent-bindings.lifecycle-D70FYNvn.js

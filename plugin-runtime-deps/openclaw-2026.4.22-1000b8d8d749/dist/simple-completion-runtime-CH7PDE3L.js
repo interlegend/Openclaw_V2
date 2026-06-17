@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/simple-completion-runtime-CH7PDE3L.js

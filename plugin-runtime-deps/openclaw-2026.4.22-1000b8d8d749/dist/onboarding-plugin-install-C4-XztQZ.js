@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/onboarding-plugin-install-C4-XztQZ.js

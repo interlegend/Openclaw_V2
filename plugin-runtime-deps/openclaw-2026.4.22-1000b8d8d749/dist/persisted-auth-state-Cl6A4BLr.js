@@ -1,1 +1,0 @@
-/home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/persisted-auth-state-Cl6A4BLr.js
