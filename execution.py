@@ -13,18 +13,6 @@ SUDO_INDICATORS = [
     "access is denied"
 ]
 
-ERROR_INDICATORS = [
-    "command not found", "No such file or directory",
-    "Error:", "ERROR:", "error:", "Traceback",
-    "ModuleNotFoundError", "ImportError", "FileNotFoundError",
-    "Connection refused", "timeout", "FAILED", "failed"
-]
-
-SUCCESS_INDICATORS = [
-    "Successfully installed", "Already up to date",
-    "done", "OK", "Created", "Saved", "written",
-    "started", "running", "active"
-]
 
 SILENT_SUCCESS_COMMANDS = [
     "pkill", "kill", "rm ", "mv ", "cp ", "mkdir", "touch",
@@ -151,29 +139,17 @@ def run_command(cmd, timeout: int = DEFAULT_CMD_TIMEOUT) -> dict:
 
         # Heuristics
         needs_sudo = any(ind.lower() in output_lower for ind in SUDO_INDICATORS)
-        has_error_text = any(ind.lower() in output_lower for ind in ERROR_INDICATORS)
-        has_success_text = any(ind.lower() in output_lower for ind in SUCCESS_INDICATORS)
 
         # Deterministic exit-code result (authoritative)
         exit_code_success = (result.returncode == 0)
 
-        # Compatibility: previous implementation allowed textual success to override
-        # non-zero exit codes. Preserve that in `success` for now, but expose
-        # `exit_code_success` and `heuristic_success` for callers to adopt.
-        heuristic_success = (not exit_code_success) and has_success_text
-        # Previous `is_actually_success` considered absence of known error text too
-        is_actually_success = exit_code_success and not has_error_text
-        if not is_actually_success and has_success_text:
-            is_actually_success = True
-
         return {
             "output": output,
-            "success": is_actually_success,
+            "success": exit_code_success,
             "exit_code_success": exit_code_success,
-            "heuristic_success": heuristic_success,
             "needs_sudo": needs_sudo,
             "returncode": result.returncode,
-            "error_type": "sudo" if needs_sudo else ("error" if not is_actually_success else None)
+            "error_type": "sudo" if needs_sudo else ("error" if not exit_code_success else None)
         }
 
     except subprocess.TimeoutExpired:
