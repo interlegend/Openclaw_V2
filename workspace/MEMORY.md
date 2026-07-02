@@ -16,7 +16,7 @@ Last updated: 2026-06-12
 - Pet: Pug named Baddu
 - Hates long explanations â€” loves direct execution
 - Builds AI automation tools (Final Form AI project)
-- Ubuntu i7 16GB laptop, no GPU
+- Ubuntu i7 16GB laptop, no GPU and a windows pc with 8gb ram and i3 core
 - Groq API key configured and working
 
 ## Permanent Bans / Never Do
@@ -77,7 +77,7 @@ Last updated: 2026-06-12
 - The bot lacks native vision capabilities, being a text-based AI, and cannot directly read or process images.
 - The bot can suggest OCR tools for extracting text from images but cannot perform this task itself.
 
-## Session Notes — 2026-05-09
+## Session Notes ï¿½ 2026-05-09
 - OpenClaw's personality files are located in multiple files, including IDENTITY.md, SOUL.md, MEMORY.md, and USER.md, which define its core vibe, tone, language, and overall personality.
 - The IDENTITY.md and SOUL.md files are not found in the expected location, C:\home\ubuntu\, indicating a potential issue with file paths or locations.
 - OpenClaw attempts to load its identity and soul files, but encounters "File not found" errors, suggesting a discrepancy between expected and actual file locations.
@@ -85,13 +85,13 @@ Last updated: 2026-06-12
 - User is testing the new portable architecture
 - The user's favorite color has been updated to Lime Green.
 
-## Session Notes — 2026-05-12
+## Session Notes ï¿½ 2026-05-12
 - System RAM is currently at 11Gi.
 - Disk space is clear.
 - No new user preferences or personal details were shared.
 - The system is currently operational and ready for use.
 - The bot is prepared to execute commands or run Python code as needed.
 
-## Session Notes — 2026-06-12
+## Session Notes ï¿½ 2026-06-12
 - The user has initiated a new conversation and is checking the bot's status.
 - The bot is confirming its readiness to perform tasks and execute code.
